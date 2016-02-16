@@ -1,13 +1,22 @@
 var MonkeyInline = function(){
 
   this.classname = "monkey-inline";
-  this.maxEditors = 100;
 
   this.run = function run(){
     var editors = getClassElement(this.classname);
     for (var i = 0; i < editors.length; i++){
       editors[i].setAttribute("contentEditable","true");
+      this.monkeyHandler(editors[i]);
     }
+
+  };
+
+  this.monkeyHandler = function monkeyHandler(element){
+    element.onclick = function(e){
+      if (element.getAttribute("data-toolbar") != "false"){
+        alert("hello!");
+      }
+    };
   };
 
 };
