@@ -6,18 +6,27 @@ var MonkeyInline = function(){
     var editors = getClassElement(this.classname);
     for (var i = 0; i < editors.length; i++){
       editors[i].setAttribute("contentEditable","true");
-      this.monkeyHandler(editors[i]);
+      monkeyHandler(editors[i]);
     }
 
   };
 
-  this.monkeyHandler = function monkeyHandler(element){
+  function monkeyHandler(element){
     element.onclick = function(e){
       if (element.getAttribute("data-toolbar") != "false"){
-        alert("hello!");
+        monkeyToolbar(this);
       }
     };
-  };
+  }
+
+  function monkeyToolbar(element){
+    var monkeyClass = element.className;
+
+  }
+
+  function generateToolbarHTML(){
+    
+  }
 
 };
 
