@@ -1,0 +1,57 @@
+
+//Colors
+@background-color: #D2D7D3;
+@highlight-color: #F9BF3B;
+@highlight-hover-color: #F9BF3B;
+@hover-color: #EEEEEE;
+@font-color: #6C7A89;
+@font-highlight-color: #6C7A89;
+@font-highlight-hover-color: #6C7A89;
+@font-hover-color: #F9BF3B;
+
+//Values
+@border: none;
+@radius: 5px;
+@font-size: 18px;
+@padding: 4px;
+@btn-margin:0px;
+@btn-padding:8px;
+
+.border-radius(@size){
+  -webkit-border-radius: @size;
+  border-radius: @size;
+}
+
+#monkeyContainer{
+  display:none;
+  position: absolute;
+  padding:@padding;
+  background-color:@background-color;
+  .border-radius(@radius);
+  ul{
+    list-style: none;
+    padding:0;
+    margin:0;
+    display:block;
+    li{
+      float:left;
+      margin:@btn-margin;
+      padding:@btn-padding;
+      color:@font-color;
+      font-size:@font-size;
+    }
+    li:hover{
+      color:@font-hover-color;
+      background-color:@hover-color;
+      .border-radius(@radius);
+    }
+    .used{
+      background-color:@highlight-color !important;
+      color:@font-highlight-color !important;
+    }
+    .used:hover{
+      background-color:@highlight-hover-color !important;
+      color:@font-highlight-hover-color !important;
+    }
+  }
+}
