@@ -31,11 +31,12 @@ var MonkeyInline = function(){
     var elementTop = element.offsetTop;
     var currentPosition = elementTop - document.documentElement.scrollTop;
     var offsetHeight = toolbar.offsetHeight;
+    var toolbarPosition = elementTop - offsetHeight;
     if (currentPosition >= 100){
+      toolbar.style.top = toolbarPosition+"px";
       toolbar.style.display = "block";
-      toolbar.style.top = currentPosition - offsetHeight;
     }else if (currentPosition < 100){
-      toolbar.style.top = 0;
+      toolbar.style.top = toolbarPosition+"px";
       toolbar.style.display = "block";
     }
   }
