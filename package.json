@@ -1,0 +1,27 @@
+{
+  "name": "monkey-inline",
+  "version": "1.0.0",
+  "description": "Inline Editor",
+  "main": "build/monkeyInline.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://csmets@github.com/csmets/Monkey-Inline.git"
+  },
+  "author": "Clyde Smets",
+  "license": "GNU",
+  "bugs": {
+    "url": "https://github.com/csmets/Monkey-Inline/issues"
+  },
+  "homepage": "https://github.com/csmets/Monkey-Inline#readme",
+  "dependencies": {
+    "grunt": "^0.4.5"
+  },
+  "devDependencies": {
+    "grunt-contrib-concat": "^1.0.0",
+    "grunt-contrib-less": "^1.2.0",
+    "grunt-contrib-uglify": "^0.11.1",
+    "grunt-contrib-watch": "^0.6.1"
+  }
+}

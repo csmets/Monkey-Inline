@@ -1,0 +1,35 @@
+#monkeyContainer {
+  display: none;
+  position: absolute;
+  padding: 4px;
+  background-color: #D2D7D3;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+#monkeyContainer ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: block;
+}
+#monkeyContainer ul li {
+  float: left;
+  margin: 0px;
+  padding: 8px;
+  color: #6C7A89;
+  font-size: 18px;
+}
+#monkeyContainer ul li:hover {
+  color: #F9BF3B;
+  background-color: #EEEEEE;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+#monkeyContainer ul .used {
+  background-color: #F9BF3B !important;
+  color: #6C7A89 !important;
+}
+#monkeyContainer ul .used:hover {
+  background-color: #F9BF3B !important;
+  color: #6C7A89 !important;
+}
