@@ -10,5 +10,11 @@ var tools = [
     "function_name" : italic,
     "content" : "<i class='fa fa-italic'></i>",
     "description" : "Height text you wish to make italic"
+  },
+  {
+    "name" : "monkeyInline-underline",
+    "function_name" : underline,
+    "content" : "<i class='fa fa-underline'></i>",
+    "description" : "Height text you wish to make underline"
   }
 ];

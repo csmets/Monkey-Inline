@@ -118,6 +118,12 @@ var tools = [
     "function_name" : italic,
     "content" : "<i class='fa fa-italic'></i>",
     "description" : "Height text you wish to make italic"
+  },
+  {
+    "name" : "monkeyInline-underline",
+    "function_name" : underline,
+    "content" : "<i class='fa fa-underline'></i>",
+    "description" : "Height text you wish to make underline"
   }
 ];
 
@@ -143,6 +149,20 @@ function italic(){
 
   var isItalic = document.queryCommandState("italic");
   if (isItalic === true){
+    highlightButton(ele);
+  }else{
+    unHightlightButton(ele);
+  }
+}
+
+function underline(){
+  var ele = document.getElementById("monkeyInline-underline");
+  ele.onclick = function(){
+    document.execCommand('underline');
+  };
+
+  var isUnderline = document.queryCommandState("underline");
+  if (isUnderline === true){
     highlightButton(ele);
   }else{
     unHightlightButton(ele);
