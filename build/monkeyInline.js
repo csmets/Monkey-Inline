@@ -25,6 +25,7 @@ var MonkeyInline = function(){
   function monkeyToolbar(element){
     var toolbar = document.getElementById(toolbarID);
     positionToolbar(element,toolbar);
+    execTools();
   }
 
   function positionToolbar(element, toolbar){
@@ -46,15 +47,24 @@ var MonkeyInline = function(){
     container.id = toolbarID;
     var list = document.createElement("ul");
     container.appendChild(list);
-    var listRow1 = document.createElement("li");
-    var boldBtn = create("<i class='fa fa-bold'></i>");
-    list.appendChild(listRow1);
-    listRow1.appendChild(boldBtn);
-    var listRow2 = document.createElement("li");
-    var italicBtn = create("<i class='fa fa-italic'></i>");
-    list.appendChild(listRow2);
-    listRow2.appendChild(italicBtn);
+    for(var i = 0; i < tools.length; i++){
+      var btnWrapper = document.createElement("a");
+      btnWrapper.id = tools[i].name;
+      btnWrapper.setAttribute("title",tools[i].description);
+      btnWrapper.setAttribute("onmousedown","event.preventDefault();");
+      var listRow = document.createElement("li");
+      var btn = create(tools[i].content);
+      list.appendChild(btnWrapper);
+      btnWrapper.appendChild(listRow);
+      listRow.appendChild(btn);
+    }
     return container;
+  }
+
+  function execTools(){
+    for(var i = 0; i < tools.length; i++){
+      tools[i].function_name();
+    }
   }
 
 };
@@ -85,4 +95,56 @@ function getClassElement(findClass) {
 
 function insertAfter(newNode, referenceNode) {
     referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+}
+
+function highlightButton(element){
+  var li = element.getElementsByTagName("li")[0];
+  li.className = "used";
+}
+function unHightlightButton(element){
+  var li = element.getElementsByTagName("li")[0];
+  li.className = "";
+}
+
+var tools = [
+  {
+    "name" : "monkeyInline-bold",
+    "function_name" : bold,
+    "content" : "<i class='fa fa-bold'></i>",
+    "description" : "Highlight text you wish to make bold"
+  },
+  {
+    "name" : "monkeyInline-italic",
+    "function_name" : italic,
+    "content" : "<i class='fa fa-italic'></i>",
+    "description" : "Height text you wish to make italic"
+  }
+];
+
+function bold(){
+  var ele = document.getElementById("monkeyInline-bold");
+  ele.onclick = function(){
+    document.execCommand('bold');
+  };
+
+  var isBold = document.queryCommandState("bold");
+  if (isBold === true){
+    highlightButton(ele);
+  }else{
+    unHightlightButton(ele);
+  }
+}
+
+function italic(){
+  var ele = document.getElementById("monkeyInline-italic");
+  ele.onclick = function(){
+    document.execCommand('italic');
+  };
+
+  var isItalic = document.queryCommandState("italic");
+  if (isItalic === true){
+    highlightButton(ele);
+  }else{
+    unHightlightButton(ele);
+  }
 }

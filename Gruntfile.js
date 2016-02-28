@@ -4,7 +4,7 @@ module.exports = function(grunt){
   grunt.initConfig({
   concat: {
     dist: {
-      src: ['js/main.js', 'js/tools/*.js'],
+      src: ['js/main.js', 'js/tools.js', 'js/tools/*.js'],
       dest: 'build/monkeyInline.js',
     },
   },

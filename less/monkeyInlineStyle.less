@@ -2,11 +2,11 @@
 //Colors
 @background-color: #D2D7D3;
 @highlight-color: #F9BF3B;
-@highlight-hover-color: #F9BF3B;
+@highlight-hover-color: white;
 @hover-color: #EEEEEE;
 @font-color: #6C7A89;
-@font-highlight-color: #6C7A89;
-@font-highlight-hover-color: #6C7A89;
+@font-highlight-color: white;
+@font-highlight-hover-color: #F9BF3B;
 @font-hover-color: #F9BF3B;
 
 //Values
@@ -48,6 +48,7 @@
     .used{
       background-color:@highlight-color !important;
       color:@font-highlight-color !important;
+      .border-radius(@radius);
     }
     .used:hover{
       background-color:@highlight-hover-color !important;

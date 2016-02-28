@@ -27,9 +27,11 @@
 }
 #monkeyContainer ul .used {
   background-color: #F9BF3B !important;
-  color: #6C7A89 !important;
+  color: white !important;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
 }
 #monkeyContainer ul .used:hover {
-  background-color: #F9BF3B !important;
-  color: #6C7A89 !important;
+  background-color: white !important;
+  color: #F9BF3B !important;
 }
