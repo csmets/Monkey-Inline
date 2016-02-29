@@ -178,20 +178,36 @@ function openDialogBox(element){
       fadeIn(document.getElementById("monkeyBackground"));
       document.getElementById(dialogName).style.display = "block";
       fadeIn(document.getElementById(dialogName));
+      showDialogButtonSubmit(element);
       break;
     }
   }
 }
 
+function showDialogButtonSubmit(element){
+  var name = element.id + "-submit";
+  document.getElementById(name).style.display = "block";
+}
+
 function dialogButtonSubmit(element){
-  if (element.style.display !== "none"){
-    element.style.display = "none";
-    closeDocumentShadow();
-  }
+  var name = element.id + "-submit";
+  var ele = document.getElementById(name);
+  ele.onclick = function(){
+    if (ele.style.display !== "none"){
+      ele.style.display = "none";
+      closeDocumentShadow();
+      closeDialogBox(element);
+    }
+  };
 }
 
 function closeDocumentShadow(){
   document.getElementById("monkeyBackground").style.display = "none";
+}
+
+function closeDialogBox(element){
+  var name = element.id + "-dialog";
+  document.getElementById(name).style.display = "none";
 }
 
 var tools = [
@@ -311,6 +327,12 @@ function createLink(){
   ele.onclick = function(){
     openDialogBox(ele);
   };
+
+  dialogButtonSubmit(ele, function(event){
+    if (event){
+      alert("hello");
+    }
+  });
 }
 
 function underline(){

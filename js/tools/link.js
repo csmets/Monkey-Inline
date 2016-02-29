@@ -3,4 +3,10 @@ function createLink(){
   ele.onclick = function(){
     openDialogBox(ele);
   };
+
+  dialogButtonSubmit(ele, function(event){
+    if (event){
+      alert("hello");
+    }
+  });
 }
