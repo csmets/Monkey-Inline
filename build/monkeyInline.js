@@ -6,6 +6,8 @@ var MonkeyInline = function(){
   this.run = function run(){
     var toolbarNode = generateToolbarHTML();
     document.body.appendChild(toolbarNode);
+    generateDialogBoxes();
+    createDocumentShadow();
 
     var editors = getClassElement(this.classname);
     for (var i = 0; i < editors.length; i++){
@@ -67,6 +69,45 @@ var MonkeyInline = function(){
     }
   }
 
+  function generateDialogBoxes(){
+    for(var i = 0; i < tools.length; i++){
+      if (tools[i].dialog_box !== undefined){
+        var dialogBox = document.createElement("div");
+        var dialogBoxName = tools[i].name + "-dialog";
+        dialogBox.id = dialogBoxName;
+        dialogBox.className = "monkeyDialogBox";
+        var message = tools[i].dialog_box.message;
+        if (message !== undefined){
+          var content = document.createTextNode(message);
+          dialogBox.appendChild(content);
+        }
+        var dialogBoxHeader = document.createElement("div");
+        dialogBoxHeader.className = "monkeyDialogHeader";
+        var width = tools[i].dialog_box.width;
+        if (width !== undefined){
+          dialogBox.style.width = width;
+        }
+        var height = tools[i].dialog_box.height;
+        if (height !== undefined){
+          dialogBox.style.height = height;
+        }
+        var titleContainer = document.createElement("p");
+        var title = document.createTextNode(tools[i].dialog_box.title);
+        titleContainer.appendChild(title);
+        dialogBoxHeader.appendChild(titleContainer);
+
+        var button = document.createElement("button");
+        button.id = tools[i].name + "-submit";
+        var buttonLabel = document.createTextNode("Submit");
+        button.appendChild(buttonLabel);
+
+        dialogBox.appendChild(dialogBoxHeader);
+        dialogBox.appendChild(button);
+        document.body.appendChild(dialogBox);
+      }
+    }
+  }
+
 };
 
 function create(htmlStr) {
@@ -106,6 +147,53 @@ function unHightlightButton(element){
   li.className = "";
 }
 
+function fadeIn(el) {
+  el.style.opacity = 0;
+
+  var last = +new Date();
+  var tick = function() {
+    el.style.opacity = +el.style.opacity + (new Date() - last) / 400;
+    last = +new Date();
+
+    if (+el.style.opacity < 1) {
+      (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+    }
+  };
+
+  tick();
+}
+
+function createDocumentShadow(){
+  var documentShadow = document.createElement("div");
+  documentShadow.id = "monkeyBackground";
+  document.body.appendChild(documentShadow);
+}
+
+function openDialogBox(element){
+  for(var i = 0; i < tools.length; i++){
+    var name = tools[i].name;
+    if (name == element.id){
+      var dialogName = name+"-dialog";
+      document.getElementById("monkeyBackground").style.display = "block";
+      fadeIn(document.getElementById("monkeyBackground"));
+      document.getElementById(dialogName).style.display = "block";
+      fadeIn(document.getElementById(dialogName));
+      break;
+    }
+  }
+}
+
+function dialogButtonSubmit(element){
+  if (element.style.display !== "none"){
+    element.style.display = "none";
+    closeDocumentShadow();
+  }
+}
+
+function closeDocumentShadow(){
+  document.getElementById("monkeyBackground").style.display = "none";
+}
+
 var tools = [
   {
     "name" : "monkeyInline-bold",
@@ -117,14 +205,50 @@ var tools = [
     "name" : "monkeyInline-italic",
     "function_name" : italic,
     "content" : "<i class='fa fa-italic'></i>",
-    "description" : "Height text you wish to make italic"
+    "description" : "Highlight text you wish to make italic"
   },
   {
     "name" : "monkeyInline-underline",
     "function_name" : underline,
     "content" : "<i class='fa fa-underline'></i>",
-    "description" : "Height text you wish to make underline"
-  }
+    "description" : "Highlight text you wish to make underline"
+  },
+  {
+    "name" : "monkeyInline-heading1",
+    "function_name" : heading1,
+    "content" : "<i class='fa fa-header'></i>1",
+    "description" : "Highlight text you wish to make a heading 1"
+  },
+  {
+    "name" : "monkeyInline-heading2",
+    "function_name" : heading2,
+    "content" : "<i class='fa fa-header'></i>2",
+    "description" : "Highlight text you wish to make a heading 2"
+  },
+  {
+    "name" : "monkeyInline-heading3",
+    "function_name" : heading3,
+    "content" : "<i class='fa fa-header'></i>3",
+    "description" : "Highlight text you wish to make a heading 3"
+  },
+  {
+    "name" : "monkeyInline-clearFormatting",
+    "function_name" : clearFormatting,
+    "content" : "<i class='fa fa-eraser'></i>",
+    "description" : "Clear formatting"
+  },
+  {
+    "name" : "monkeyInline-link",
+    "function_name" : createLink,
+    "content" : "<i class='fa fa-link'></i>",
+    "description" : "Insert link",
+    "dialog_box" : {
+      "title" : "Insert link",
+      "message" : "Insert the link below to insert it",
+      "width" : "250px",
+      "height" : "200px"
+    }
+  },
 ];
 
 function bold(){
@@ -141,6 +265,33 @@ function bold(){
   }
 }
 
+function clearFormatting(){
+  var ele = document.getElementById("monkeyInline-clearFormatting");
+  ele.onclick = function(){
+    document.execCommand('removeFormat');
+    document.execCommand('formatBlock',false,'<p>');
+  };
+}
+
+function heading1(){
+  var ele = document.getElementById("monkeyInline-heading1");
+  ele.onclick = function(){
+    document.execCommand('formatBlock',false,'<h1>');
+  };
+}
+function heading2(){
+  var ele = document.getElementById("monkeyInline-heading2");
+  ele.onclick = function(){
+    document.execCommand('formatBlock',false,'<h2>');
+  };
+}
+function heading3(){
+  var ele = document.getElementById("monkeyInline-heading3");
+  ele.onclick = function(){
+    document.execCommand('formatBlock',false,'<h3>');
+  };
+}
+
 function italic(){
   var ele = document.getElementById("monkeyInline-italic");
   ele.onclick = function(){
@@ -153,6 +304,13 @@ function italic(){
   }else{
     unHightlightButton(ele);
   }
+}
+
+function createLink(){
+  var ele = document.getElementById("monkeyInline-link");
+  ele.onclick = function(){
+    openDialogBox(ele);
+  };
 }
 
 function underline(){
