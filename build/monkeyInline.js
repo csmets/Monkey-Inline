@@ -104,6 +104,8 @@ var MonkeyInline = function(){
         dialogBox.appendChild(dialogBoxHeader);
         dialogBox.appendChild(button);
         document.body.appendChild(dialogBox);
+
+        tools[i].dialog_box.function_name();
       }
     }
   }
@@ -159,6 +161,7 @@ var tools = [
     "content" : "<i class='fa fa-link'></i>",
     "description" : "Insert link",
     "dialog_box" : {
+      "function_name" : dialogLinkContent,
       "title" : "Insert link",
       "message" : "Insert the link below to insert it",
       "width" : "250px",
@@ -247,7 +250,7 @@ function showDialogButtonSubmit(element){
   document.getElementById(name).style.display = "block";
 }
 
-function dialogButtonSubmit(element){
+function dialogButtonSubmit(element, callback){
   var name = element.id + "-submit";
   var ele = document.getElementById(name);
   ele.onclick = function(){
@@ -255,6 +258,9 @@ function dialogButtonSubmit(element){
       ele.style.display = "none";
       closeDocumentShadow();
       closeDialogBox(element);
+      if (callback && typeof(callback) === "function"){
+        callback();
+      }
     }
   };
 }
@@ -266,6 +272,18 @@ function closeDocumentShadow(){
 function closeDialogBox(element){
   var name = element.id + "-dialog";
   document.getElementById(name).style.display = "none";
+}
+
+function dialogContent(element, callback){
+  var name = element.id + "-dialog";
+  var dialogElement = document.getElementById(name);
+  var content;
+  if (callback && typeof(callback) === "function"){
+    content = callback();
+  }
+  if (content !== undefined){
+    dialogElement.appendChild(content);
+  }
 }
 
 function bold(){
@@ -325,15 +343,25 @@ function italic(){
 
 function createLink(){
   var ele = document.getElementById("monkeyInline-link");
+
   ele.onclick = function(){
     openDialogBox(ele);
   };
 
-  dialogButtonSubmit(ele, function(event){
-    if (event){
-      alert("hello");
-    }
+  dialogButtonSubmit(ele, function(){
+    console.log('something happened');
   });
+}
+
+function dialogLinkContent(){
+  var ele = document.getElementById("monkeyInline-link");
+  dialogContent(ele, function(){
+    var content = document.createElement("div");
+    var text = document.createTextNode("Hello here is some text");
+    content.appendChild(text);
+    return content;
+  });
+
 }
 
 function underline(){

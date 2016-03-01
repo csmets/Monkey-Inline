@@ -47,6 +47,7 @@ var tools = [
     "content" : "<i class='fa fa-link'></i>",
     "description" : "Insert link",
     "dialog_box" : {
+      "function_name" : dialogLinkContent,
       "title" : "Insert link",
       "message" : "Insert the link below to insert it",
       "width" : "250px",

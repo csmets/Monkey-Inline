@@ -78,7 +78,7 @@ function showDialogButtonSubmit(element){
   document.getElementById(name).style.display = "block";
 }
 
-function dialogButtonSubmit(element){
+function dialogButtonSubmit(element, callback){
   var name = element.id + "-submit";
   var ele = document.getElementById(name);
   ele.onclick = function(){
@@ -86,6 +86,9 @@ function dialogButtonSubmit(element){
       ele.style.display = "none";
       closeDocumentShadow();
       closeDialogBox(element);
+      if (callback && typeof(callback) === "function"){
+        callback();
+      }
     }
   };
 }
@@ -97,4 +100,16 @@ function closeDocumentShadow(){
 function closeDialogBox(element){
   var name = element.id + "-dialog";
   document.getElementById(name).style.display = "none";
+}
+
+function dialogContent(element, callback){
+  var name = element.id + "-dialog";
+  var dialogElement = document.getElementById(name);
+  var content;
+  if (callback && typeof(callback) === "function"){
+    content = callback();
+  }
+  if (content !== undefined){
+    dialogElement.appendChild(content);
+  }
 }

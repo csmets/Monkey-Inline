@@ -104,6 +104,8 @@ var MonkeyInline = function(){
         dialogBox.appendChild(dialogBoxHeader);
         dialogBox.appendChild(button);
         document.body.appendChild(dialogBox);
+
+        tools[i].dialog_box.function_name();
       }
     }
   }
