@@ -36,12 +36,6 @@ var tools = [
     "description" : "Highlight text you wish to make a heading 3"
   },
   {
-    "name" : "monkeyInline-clearFormatting",
-    "function_name" : clearFormatting,
-    "content" : "<i class='fa fa-eraser'></i>",
-    "description" : "Clear formatting"
-  },
-  {
     "name" : "monkeyInline-link",
     "function_name" : createLink,
     "content" : "<i class='fa fa-link'></i>",
@@ -53,5 +47,11 @@ var tools = [
       "width" : "250px",
       "height" : "200px"
     }
+  },
+  {
+    "name" : "monkeyInline-clearFormatting",
+    "function_name" : clearFormatting,
+    "content" : "<i class='fa fa-eraser'></i>",
+    "description" : "Clear formatting"
   },
 ];

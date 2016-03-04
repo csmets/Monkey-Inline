@@ -150,12 +150,6 @@ var tools = [
     "description" : "Highlight text you wish to make a heading 3"
   },
   {
-    "name" : "monkeyInline-clearFormatting",
-    "function_name" : clearFormatting,
-    "content" : "<i class='fa fa-eraser'></i>",
-    "description" : "Clear formatting"
-  },
-  {
     "name" : "monkeyInline-link",
     "function_name" : createLink,
     "content" : "<i class='fa fa-link'></i>",
@@ -167,6 +161,12 @@ var tools = [
       "width" : "250px",
       "height" : "200px"
     }
+  },
+  {
+    "name" : "monkeyInline-clearFormatting",
+    "function_name" : clearFormatting,
+    "content" : "<i class='fa fa-eraser'></i>",
+    "description" : "Clear formatting"
   },
 ];
 
@@ -357,8 +357,9 @@ function dialogLinkContent(){
   var ele = document.getElementById("monkeyInline-link");
   dialogContent(ele, function(){
     var content = document.createElement("div");
-    var text = document.createTextNode("Hello here is some text");
-    content.appendChild(text);
+    var link = document.createElement("input");
+    link.type = "text";
+    content.appendChild(link);
     return content;
   });
 
