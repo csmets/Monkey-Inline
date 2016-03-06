@@ -1,6 +1,8 @@
+var InlineClassName = "monkey-inline";
+
 var MonkeyInline = function(){
 
-  this.classname = "monkey-inline";
+  this.classname = InlineClassName;
   var toolbarID = "monkeyContainer";
 
   this.run = function run(){
