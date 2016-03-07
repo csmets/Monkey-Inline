@@ -1,8 +1,12 @@
+// Monkey Inline Editor 2016
+// @Author Clyde Smets
+// @Email clyde.smets@gmail.com
+
 var InlineClassName = "monkey-inline";
 
 var MonkeyInline = function(){
 
-  this.classname = InlineClassName;
+  var className = InlineClassName;
   var toolbarID = "monkeyContainer";
 
   this.run = function run(){
@@ -11,40 +15,12 @@ var MonkeyInline = function(){
     generateDialogBoxes();
     createDocumentShadow();
 
-    var editors = getClassElement(this.classname);
+    var editors = getClassElement(className);
     for (var i = 0; i < editors.length; i++){
       editors[i].setAttribute("contentEditable","true");
       monkeyHandler(editors[i]);
     }
   };
-
-  function monkeyHandler(element){
-    element.onclick = function(e){
-      if (element.getAttribute("data-toolbar") != "false"){
-        monkeyToolbar(this);
-      }
-    };
-  }
-
-  function monkeyToolbar(element){
-    var toolbar = document.getElementById(toolbarID);
-    positionToolbar(element,toolbar);
-    execTools();
-  }
-
-  function positionToolbar(element, toolbar){
-    var elementTop = element.offsetTop;
-    var currentPosition = elementTop - document.documentElement.scrollTop;
-    var offsetHeight = toolbar.offsetHeight;
-    var toolbarPosition = elementTop - offsetHeight;
-    if (currentPosition >= 100){
-      toolbar.style.top = toolbarPosition+"px";
-      toolbar.style.display = "block";
-    }else if (currentPosition < 100){
-      toolbar.style.top = toolbarPosition+"px";
-      toolbar.style.display = "block";
-    }
-  }
 
   function generateToolbarHTML(){
     var container = document.createElement("div");
@@ -63,12 +39,6 @@ var MonkeyInline = function(){
       listRow.appendChild(btn);
     }
     return container;
-  }
-
-  function execTools(){
-    for(var i = 0; i < tools.length; i++){
-      tools[i].function_name();
-    }
   }
 
   function generateDialogBoxes(){
@@ -98,17 +68,61 @@ var MonkeyInline = function(){
         titleContainer.appendChild(title);
         dialogBoxHeader.appendChild(titleContainer);
 
+        var buttonContainer = document.createElement('div');
+        buttonContainer.className = "button-container";
+
         var button = document.createElement("button");
         button.id = tools[i].name + "-submit";
         var buttonLabel = document.createTextNode("Submit");
         button.appendChild(buttonLabel);
 
+        var closeButton = document.createElement("button");
+        closeButton.id = tools[i].name + "-close";
+        var closeButtonLabel = document.createTextNode("Close");
+        closeButton.appendChild(closeButtonLabel);
+
         dialogBox.appendChild(dialogBoxHeader);
-        dialogBox.appendChild(button);
+        buttonContainer.appendChild(button);
+        buttonContainer.appendChild(closeButton);
+        dialogBox.appendChild(buttonContainer);
         document.body.appendChild(dialogBox);
 
         tools[i].dialog_box.function_name();
       }
+    }
+  }
+
+  function monkeyHandler(element){
+    element.onclick = function(e){
+      if (element.getAttribute("data-toolbar") != "false"){
+        monkeyToolbar(this);
+      }
+    };
+  }
+
+  function monkeyToolbar(element){
+    var toolbar = document.getElementById(toolbarID);
+    positionToolbar(element,toolbar);
+    execTools();
+  }
+
+  function positionToolbar(element, toolbar){
+    var elementTop = element.offsetTop;
+    var currentPosition = elementTop - document.documentElement.scrollTop;
+    var offsetHeight = toolbar.offsetHeight;
+    var toolbarPosition = elementTop - offsetHeight;
+    if (currentPosition >= 100){
+      toolbar.style.top = toolbarPosition+"px";
+      toolbar.style.display = "block";
+    }else if (currentPosition < 100){
+      toolbar.style.top = toolbarPosition+"px";
+      toolbar.style.display = "block";
+    }
+  }
+
+  function execTools(){
+    for(var i = 0; i < tools.length; i++){
+      tools[i].function_name();
     }
   }
 

@@ -11,17 +11,23 @@ function createLink(){
     var makeLink = "<a href='"+link+"'>"+name+"</a>";
     insertHTMLToEditor(makeLink);
   });
+
+  dialogButtonClose(ele);
 }
 
 function dialogLinkContent(){
   var ele = document.getElementById("monkeyInline-link");
   dialogContent(ele, function(){
     var content = document.createElement("div");
-    var nameLabel = document.createTextNode("Link Name:");
+    var nameLabel = document.createElement("label");
+    var nameLabelTxt = document.createTextNode("Link Name:");
+    nameLabel.appendChild(nameLabelTxt);
     var name = document.createElement("input");
     name.type = "text";
     name.id = "monkey-inline-insert-link-name-input";
-    var linkLabel = document.createTextNode("Link:");
+    var linkLabel = document.createElement("label");
+    var linkLabelTxt = document.createTextNode("Link:");
+    linkLabel.appendChild(linkLabelTxt);
     var link = document.createElement("input");
     link.type = "text";
     link.id = "monkey-inline-insert-link-input";

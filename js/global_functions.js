@@ -1,55 +1,34 @@
-
 function create(htmlStr) {
-    var frag = document.createDocumentFragment(),
-        temp = document.createElement('div');
-    temp.innerHTML = htmlStr;
-    while (temp.firstChild) {
-        frag.appendChild(temp.firstChild);
-    }
-    return frag;
+  var frag = document.createDocumentFragment(),
+      temp = document.createElement('div');
+  temp.innerHTML = htmlStr;
+  while (temp.firstChild) {
+      frag.appendChild(temp.firstChild);
+  }
+  return frag;
 }
-
 
 function getClassElement(findClass) {
-    var elems = document.getElementsByTagName('*'), i;
-    var classElems = [];
-    var counter = 0;
-    for (i in elems) {
-        if((' ' + elems[i].className + ' ').indexOf(' ' + findClass + ' ') > -1) {
-            classElems[counter] = elems[i];
-            counter++;
-        }
-    }
-    return classElems;
-}
-
-function insertAfter(newNode, referenceNode) {
-    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+  var elems = document.getElementsByTagName('*'), i;
+  var classElems = [];
+  var counter = 0;
+  for (i in elems) {
+      if((' ' + elems[i].className + ' ').indexOf(' ' + findClass + ' ') > -1) {
+          classElems[counter] = elems[i];
+          counter++;
+      }
+  }
+  return classElems;
 }
 
 function highlightButton(element){
   var li = element.getElementsByTagName("li")[0];
   li.className = "used";
 }
+
 function unHightlightButton(element){
   var li = element.getElementsByTagName("li")[0];
   li.className = "";
-}
-
-function fadeIn(el) {
-  el.style.opacity = 0;
-
-  var last = +new Date();
-  var tick = function() {
-    el.style.opacity = +el.style.opacity + (new Date() - last) / 400;
-    last = +new Date();
-
-    if (+el.style.opacity < 1) {
-      (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
-    }
-  };
-
-  tick();
 }
 
 function createDocumentShadow(){
@@ -68,7 +47,8 @@ function openDialogBox(element){
       document.getElementById(dialogName).style.display = "block";
       fadeIn(document.getElementById(dialogName));
       showDialogButtonSubmit(element);
-      pasteHtmlAtCaret("%MONKEY-INSERT-LOC%")
+      showDialogButtonClose(element);
+      pasteHtmlAtCaret("%MONKEY-INSERT-LOC%");
       break;
     }
   }
@@ -85,6 +65,27 @@ function dialogButtonSubmit(element, callback){
   ele.onclick = function(){
     if (ele.style.display !== "none"){
       ele.style.display = "none";
+      closeDocumentShadow();
+      closeDialogBox(element);
+      if (callback && typeof(callback) === "function"){
+        callback();
+      }
+    }
+  };
+}
+
+function showDialogButtonClose(element){
+  var name = element.id + "-close";
+  document.getElementById(name).style.display = "block";
+}
+
+function dialogButtonClose(element, callback){
+  var name = element.id + "-close";
+  var ele = document.getElementById(name);
+  ele.onclick = function(){
+    if (ele.style.display !== "none"){
+      ele.style.display = "none";
+      insertHTMLToEditor('');
       closeDocumentShadow();
       closeDialogBox(element);
       if (callback && typeof(callback) === "function"){
@@ -115,22 +116,32 @@ function dialogContent(element, callback){
   }
 }
 
-var selectedInlineClassElement = null;
-var editorss = getClassElement(InlineClassName);
-for (var i = 0; i < editorss.length; i++){
- ClickStore(editorss[i]);
+function fadeIn(el) {
+  el.style.opacity = 0;
+
+  var last = +new Date();
+  var tick = function() {
+    el.style.opacity = +el.style.opacity + (new Date() - last) / 400;
+    last = +new Date();
+
+    if (+el.style.opacity < 1) {
+      (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+    }
+  };
+
+  tick();
 }
 
-function ClickStore(ele){
+var selectedInlineClassElement = null;
+var contentEditors = getClassElement(InlineClassName);
+for (var i = 0; i < contentEditors.length; i++){
+ RememberLastEditable(contentEditors[i]);
+}
+
+function RememberLastEditable(ele){
   ele.addEventListener("click", function(){
     selectedInlineClassElement = ele;
   });
-}
-
-function removeTags(html){
-  var div = document.createElement("div");
-  div.innerHTML = html;
-  return div.innerText;
 }
 
 function insertHTMLToEditor(html){
@@ -172,4 +183,14 @@ function pasteHtmlAtCaret(html) {
         // IE < 9
         document.selection.createRange().pasteHTML(html);
     }
+}
+
+function removeTags(html){
+  var div = document.createElement("div");
+  div.innerHTML = html;
+  return div.innerText;
+}
+
+function insertAfter(newNode, referenceNode) {
+    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 }

@@ -1,61 +1,67 @@
 
 //Colors
-@background-color: #D2D7D3;
-@highlight-color: #F9BF3B;
-@highlight-hover-color: white;
-@hover-color: #EEEEEE;
-@font-color: #6C7A89;
-@font-highlight-color: white;
+@background-color          : #D2D7D3;
+@highlight-color           : #F9BF3B;
+@highlight-hover-color     : white;
+@hover-color               : #EEEEEE;
+@font-color                : #6C7A89;
+@font-highlight-color      : white;
 @font-highlight-hover-color: #F9BF3B;
-@font-hover-color: #F9BF3B;
-@background-shadow-color: rgba(44, 62, 80,0.7);
-@dialog-color: #EEEEEE;
-@dialog-header-color : #D2D7D3;
-@dialog-font-color : #6C7A89;
-@dialog-header-font-color: #6C7A89;
+@font-hover-color          : #F9BF3B;
+@background-shadow-color   : rgba(44, 62, 80,0.7);
+@dialog-color              : #EEEEEE;
+@dialog-header-color       : #D2D7D3;
+@dialog-font-color         : #6C7A89;
+@dialog-header-font-color  : #6C7A89;
+@dialog-font-size          : 11px;
+@dialog-header-size        : 14px;
+@dialog-button-color       : #6C7A89;
+@dialog-button-hover-color : #F9BF3B;
+@dialog-button-font-color  : white;
 
 //Values
-@border: none;
-@radius: 5px;
-@font-size: 18px;
-@padding: 4px;
-@btn-margin:0px;
+@border     : none;
+@radius     : 5px;
+@font-size  : 18px;
+@padding    : 4px;
+@btn-margin :0px;
 @btn-padding:8px;
 
-@toolbar-text-font: Arial, Helvetica, sans-serif;
+@toolbar-text-font: Arial,
+Helvetica, sans-serif;
 
 .border-radius(@size){
   -webkit-border-radius: @size;
-  border-radius: @size;
+  border-radius        : @size;
 }
 
 #monkeyContainer{
-  display:none;
-  position: absolute;
-  padding:@padding;
+  display         :none;
+  position        : absolute;
+  padding         :@padding;
   background-color:@background-color;
-  font-family:@toolbar-text-font !important;
+  font-family     :@toolbar-text-font !important;
   .border-radius(@radius);
   ul{
     list-style: none;
-    padding:0;
-    margin:0;
-    display:block;
+    padding   :0;
+    margin    :0;
+    display   :block;
     li{
-      float:left;
-      margin:@btn-margin;
-      padding:@btn-padding;
-      color:@font-color;
+      float    :left;
+      margin   :@btn-margin;
+      padding  :@btn-padding;
+      color    :@font-color;
       font-size:@font-size;
     }
     li:hover{
-      color:@font-hover-color;
+      color           :@font-hover-color;
       background-color:@hover-color;
       .border-radius(@radius);
     }
     .used{
       background-color:@highlight-color !important;
-      color:@font-highlight-color !important;
+      color           :@font-highlight-color !important;
       .border-radius(@radius);
     }
     .used:hover{
@@ -66,54 +72,83 @@
 }
 
 #monkeyBackground{
-  display:none;
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
+  display         :none;
+  position        :fixed;
+  top             :0;
+  left            :0;
+  width           :100%;
+  height          :100%;
   background-color: @background-shadow-color;
-  opacity: 0;
+  opacity         : 0;
 }
 
 .monkeyDialogBox{
-  font-family:@toolbar-text-font !important;
-  display:none;
-  opacity:0;
-  position:fixed;
-  background-color:@dialog-color;
-  padding:20px;
-  padding-top:60px;
+  font-family      :@toolbar-text-font !important;
+  display          :none;
+  opacity          :0;
+  position         :fixed;
+  font-size        : @dialog-font-size;
+  background-color :@dialog-color;
+  padding          :20px;
+  padding-top      :60px;
   .border-radius(5px);
-  top: 50%;
-  left: 50%;
+  top              : 50%;
+  left             : 50%;
   -webkit-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  -o-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  color:@dialog-font-color;
-  z-index: 2;
+  -moz-transform   : translate(-50%, -50%);
+  -ms-transform    : translate(-50%, -50%);
+  -o-transform     : translate(-50%, -50%);
+  transform        : translate(-50%, -50%);
+  color            :@dialog-font-color;
+  z-index          : 2;
   .monkeyDialogHeader{
-    position:absolute;
-    display:block;
-    top:0;
-    left:0;
-    width:100%;
-    padding-top:10px;
-    padding-bottom:10px;
+    position        :absolute;
+    display         :block;
+    top             :0;
+    left            :0;
+    width           :100%;
+    padding-top     :10px;
+    padding-bottom  :10px;
     background-color:@dialog-header-color;
-    color:@dialog-header-font-color;
+    color           :@dialog-header-font-color;
+    font-size       : @dialog-header-size;
+    font-weight     : bold;
     p {
-      padding:0;
-      margin:0;
+      padding     :0;
+      margin      :0;
       padding-left:20px;
     }
   }
+
+  .button-container{
+    position: absolute;
+    bottom            :10px;
+    width: 100%;
+  }
+
   button{
-    position:absolute;
-    padding:10px;
-    bottom:10px;
-    right:10px;
+    float : right;
+    margin-right: 40px;
+    padding           :10px;
+    font-size         : @dialog-font-size;
+    background-color  : @dialog-button-color;
+    color             : @dialog-button-font-color;
+    border            : none;
+    -webkit-appearance: none;
+   -moz-appearance    : none;
+   appearance         : none;
+  }
+  button:hover{
+    background-color:@dialog-button-hover-color;
+  }
+  input{
+    width    : 100%;
+    padding  :5px;
+    border   : @border;
+    font-size: @dialog-font-size;
+  }
+  label{
+    display   :block;
+    margin-top:10px;
   }
 }

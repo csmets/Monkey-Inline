@@ -1,8 +1,12 @@
+// Monkey Inline Editor 2016
+// @Author Clyde Smets
+// @Email clyde.smets@gmail.com
+
 var InlineClassName = "monkey-inline";
 
 var MonkeyInline = function(){
 
-  this.classname = InlineClassName;
+  var className = InlineClassName;
   var toolbarID = "monkeyContainer";
 
   this.run = function run(){
@@ -11,40 +15,12 @@ var MonkeyInline = function(){
     generateDialogBoxes();
     createDocumentShadow();
 
-    var editors = getClassElement(this.classname);
+    var editors = getClassElement(className);
     for (var i = 0; i < editors.length; i++){
       editors[i].setAttribute("contentEditable","true");
       monkeyHandler(editors[i]);
     }
   };
-
-  function monkeyHandler(element){
-    element.onclick = function(e){
-      if (element.getAttribute("data-toolbar") != "false"){
-        monkeyToolbar(this);
-      }
-    };
-  }
-
-  function monkeyToolbar(element){
-    var toolbar = document.getElementById(toolbarID);
-    positionToolbar(element,toolbar);
-    execTools();
-  }
-
-  function positionToolbar(element, toolbar){
-    var elementTop = element.offsetTop;
-    var currentPosition = elementTop - document.documentElement.scrollTop;
-    var offsetHeight = toolbar.offsetHeight;
-    var toolbarPosition = elementTop - offsetHeight;
-    if (currentPosition >= 100){
-      toolbar.style.top = toolbarPosition+"px";
-      toolbar.style.display = "block";
-    }else if (currentPosition < 100){
-      toolbar.style.top = toolbarPosition+"px";
-      toolbar.style.display = "block";
-    }
-  }
 
   function generateToolbarHTML(){
     var container = document.createElement("div");
@@ -63,12 +39,6 @@ var MonkeyInline = function(){
       listRow.appendChild(btn);
     }
     return container;
-  }
-
-  function execTools(){
-    for(var i = 0; i < tools.length; i++){
-      tools[i].function_name();
-    }
   }
 
   function generateDialogBoxes(){
@@ -98,17 +68,61 @@ var MonkeyInline = function(){
         titleContainer.appendChild(title);
         dialogBoxHeader.appendChild(titleContainer);
 
+        var buttonContainer = document.createElement('div');
+        buttonContainer.className = "button-container";
+
         var button = document.createElement("button");
         button.id = tools[i].name + "-submit";
         var buttonLabel = document.createTextNode("Submit");
         button.appendChild(buttonLabel);
 
+        var closeButton = document.createElement("button");
+        closeButton.id = tools[i].name + "-close";
+        var closeButtonLabel = document.createTextNode("Close");
+        closeButton.appendChild(closeButtonLabel);
+
         dialogBox.appendChild(dialogBoxHeader);
-        dialogBox.appendChild(button);
+        buttonContainer.appendChild(button);
+        buttonContainer.appendChild(closeButton);
+        dialogBox.appendChild(buttonContainer);
         document.body.appendChild(dialogBox);
 
         tools[i].dialog_box.function_name();
       }
+    }
+  }
+
+  function monkeyHandler(element){
+    element.onclick = function(e){
+      if (element.getAttribute("data-toolbar") != "false"){
+        monkeyToolbar(this);
+      }
+    };
+  }
+
+  function monkeyToolbar(element){
+    var toolbar = document.getElementById(toolbarID);
+    positionToolbar(element,toolbar);
+    execTools();
+  }
+
+  function positionToolbar(element, toolbar){
+    var elementTop = element.offsetTop;
+    var currentPosition = elementTop - document.documentElement.scrollTop;
+    var offsetHeight = toolbar.offsetHeight;
+    var toolbarPosition = elementTop - offsetHeight;
+    if (currentPosition >= 100){
+      toolbar.style.top = toolbarPosition+"px";
+      toolbar.style.display = "block";
+    }else if (currentPosition < 100){
+      toolbar.style.top = toolbarPosition+"px";
+      toolbar.style.display = "block";
+    }
+  }
+
+  function execTools(){
+    for(var i = 0; i < tools.length; i++){
+      tools[i].function_name();
     }
   }
 
@@ -172,58 +186,37 @@ var tools = [
   },
 ];
 
-
 function create(htmlStr) {
-    var frag = document.createDocumentFragment(),
-        temp = document.createElement('div');
-    temp.innerHTML = htmlStr;
-    while (temp.firstChild) {
-        frag.appendChild(temp.firstChild);
-    }
-    return frag;
+  var frag = document.createDocumentFragment(),
+      temp = document.createElement('div');
+  temp.innerHTML = htmlStr;
+  while (temp.firstChild) {
+      frag.appendChild(temp.firstChild);
+  }
+  return frag;
 }
-
 
 function getClassElement(findClass) {
-    var elems = document.getElementsByTagName('*'), i;
-    var classElems = [];
-    var counter = 0;
-    for (i in elems) {
-        if((' ' + elems[i].className + ' ').indexOf(' ' + findClass + ' ') > -1) {
-            classElems[counter] = elems[i];
-            counter++;
-        }
-    }
-    return classElems;
-}
-
-function insertAfter(newNode, referenceNode) {
-    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+  var elems = document.getElementsByTagName('*'), i;
+  var classElems = [];
+  var counter = 0;
+  for (i in elems) {
+      if((' ' + elems[i].className + ' ').indexOf(' ' + findClass + ' ') > -1) {
+          classElems[counter] = elems[i];
+          counter++;
+      }
+  }
+  return classElems;
 }
 
 function highlightButton(element){
   var li = element.getElementsByTagName("li")[0];
   li.className = "used";
 }
+
 function unHightlightButton(element){
   var li = element.getElementsByTagName("li")[0];
   li.className = "";
-}
-
-function fadeIn(el) {
-  el.style.opacity = 0;
-
-  var last = +new Date();
-  var tick = function() {
-    el.style.opacity = +el.style.opacity + (new Date() - last) / 400;
-    last = +new Date();
-
-    if (+el.style.opacity < 1) {
-      (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
-    }
-  };
-
-  tick();
 }
 
 function createDocumentShadow(){
@@ -242,7 +235,8 @@ function openDialogBox(element){
       document.getElementById(dialogName).style.display = "block";
       fadeIn(document.getElementById(dialogName));
       showDialogButtonSubmit(element);
-      pasteHtmlAtCaret("%MONKEY-INSERT-LOC%")
+      showDialogButtonClose(element);
+      pasteHtmlAtCaret("%MONKEY-INSERT-LOC%");
       break;
     }
   }
@@ -259,6 +253,27 @@ function dialogButtonSubmit(element, callback){
   ele.onclick = function(){
     if (ele.style.display !== "none"){
       ele.style.display = "none";
+      closeDocumentShadow();
+      closeDialogBox(element);
+      if (callback && typeof(callback) === "function"){
+        callback();
+      }
+    }
+  };
+}
+
+function showDialogButtonClose(element){
+  var name = element.id + "-close";
+  document.getElementById(name).style.display = "block";
+}
+
+function dialogButtonClose(element, callback){
+  var name = element.id + "-close";
+  var ele = document.getElementById(name);
+  ele.onclick = function(){
+    if (ele.style.display !== "none"){
+      ele.style.display = "none";
+      insertHTMLToEditor('');
       closeDocumentShadow();
       closeDialogBox(element);
       if (callback && typeof(callback) === "function"){
@@ -289,22 +304,32 @@ function dialogContent(element, callback){
   }
 }
 
-var selectedInlineClassElement = null;
-var editorss = getClassElement(InlineClassName);
-for (var i = 0; i < editorss.length; i++){
- ClickStore(editorss[i]);
+function fadeIn(el) {
+  el.style.opacity = 0;
+
+  var last = +new Date();
+  var tick = function() {
+    el.style.opacity = +el.style.opacity + (new Date() - last) / 400;
+    last = +new Date();
+
+    if (+el.style.opacity < 1) {
+      (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+    }
+  };
+
+  tick();
 }
 
-function ClickStore(ele){
+var selectedInlineClassElement = null;
+var contentEditors = getClassElement(InlineClassName);
+for (var i = 0; i < contentEditors.length; i++){
+ RememberLastEditable(contentEditors[i]);
+}
+
+function RememberLastEditable(ele){
   ele.addEventListener("click", function(){
     selectedInlineClassElement = ele;
   });
-}
-
-function removeTags(html){
-  var div = document.createElement("div");
-  div.innerHTML = html;
-  return div.innerText;
 }
 
 function insertHTMLToEditor(html){
@@ -346,6 +371,16 @@ function pasteHtmlAtCaret(html) {
         // IE < 9
         document.selection.createRange().pasteHTML(html);
     }
+}
+
+function removeTags(html){
+  var div = document.createElement("div");
+  div.innerHTML = html;
+  return div.innerText;
+}
+
+function insertAfter(newNode, referenceNode) {
+    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 }
 
 function bold(){
@@ -416,17 +451,23 @@ function createLink(){
     var makeLink = "<a href='"+link+"'>"+name+"</a>";
     insertHTMLToEditor(makeLink);
   });
+
+  dialogButtonClose(ele);
 }
 
 function dialogLinkContent(){
   var ele = document.getElementById("monkeyInline-link");
   dialogContent(ele, function(){
     var content = document.createElement("div");
-    var nameLabel = document.createTextNode("Link Name:");
+    var nameLabel = document.createElement("label");
+    var nameLabelTxt = document.createTextNode("Link Name:");
+    nameLabel.appendChild(nameLabelTxt);
     var name = document.createElement("input");
     name.type = "text";
     name.id = "monkey-inline-insert-link-name-input";
-    var linkLabel = document.createTextNode("Link:");
+    var linkLabel = document.createElement("label");
+    var linkLabelTxt = document.createTextNode("Link:");
+    linkLabel.appendChild(linkLabelTxt);
     var link = document.createElement("input");
     link.type = "text";
     link.id = "monkey-inline-insert-link-input";
