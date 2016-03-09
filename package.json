@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "Inline Editor",
   "main": "build/monkeyInline.js",
-  "scripts": {
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://csmets@github.com/csmets/Monkey-Inline.git"
@@ -20,6 +19,7 @@
   },
   "devDependencies": {
     "grunt-contrib-concat": "^1.0.0",
+    "grunt-contrib-cssmin": "^1.0.0",
     "grunt-contrib-less": "^1.2.0",
     "grunt-contrib-uglify": "^0.11.1",
     "grunt-contrib-watch": "^0.6.1"

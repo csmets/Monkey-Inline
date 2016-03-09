@@ -11,7 +11,8 @@ module.exports = function(grunt){
   less: {
     production: {
       files: {
-        "build/css/monkeyInlineStyle.css": "less/monkeyInlineStyle.less"
+        "build/css/monkeyInlineStyle.css": "less/monkeyInlineStyle.less",
+        "css/MonkeyInlineDemo.css": "less/MonkeyInlineDemo.less"
       }
     }
   },
@@ -19,6 +20,13 @@ module.exports = function(grunt){
     my_target: {
       files: {
         'build/monkeyInline.min.js': ['build/monkeyInline.js']
+      }
+    }
+  },
+  cssmin: {
+    target: {
+      files: {
+        'build/css/monkeyInlineStyle.min.css': ['build/css/monkeyInlineStyle.css']
       }
     }
   },
@@ -34,6 +42,10 @@ module.exports = function(grunt){
     min:{
       files: ['build/monkeyInline.js'],
       task: ['uglify'],
+    },
+    mincss:{
+      files: ['build/css/monkeyInlineStyle.css'],
+      task: ['cssmin'],
     }
   },
 });
@@ -42,7 +54,8 @@ module.exports = function(grunt){
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.registerTask('default',['concat','less','uglify','watch']);
-  grunt.registerTask('minify',['uglify']);
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.registerTask('default',['concat','less','uglify','cssmin','watch']);
+  grunt.registerTask('minify',['uglify','cssmin']);
 
 };
