@@ -116,8 +116,9 @@ var MonkeyInline = function(){
     var elementTop = elementPosition.top;
     var offsetHeight = toolbar.offsetHeight;
     var toolbarYPositionToView = elementTop - offsetHeight;
-    var toolbarYPositionToDoc = document.body.scrollTop + toolbarYPositionToView;
-
+    var scrollPosition = document.documentElement.scrollTop || document.body.scrollTop;
+    var toolbarYPositionToDoc = scrollPosition + toolbarYPositionToView;
+    console.log(document.body.scrollTop);
     var elementLeft = elementPosition.left;
     var elementWidth = toolbar.style.left;
     var elementLeftDiference = elementLeft - elementWidth;
@@ -133,7 +134,7 @@ var MonkeyInline = function(){
     }else if (elementTop < 0){
       var elementBottom = elementPosition.bottom;
       toolbarYPositionToView = elementBottom;
-      toolbarYPositionToDoc = document.body.scrollTop + toolbarYPositionToView;
+      toolbarYPositionToDoc = scrollPosition + toolbarYPositionToView;
       toolbar.style.top = toolbarYPositionToDoc+"px";
       toolbar.style.left = toolbarXPosition+"px";
       toolbar.style.display = "block";
