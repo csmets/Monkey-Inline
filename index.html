@@ -2,21 +2,224 @@
 <html>
   <head>
     <title>Monkey Inline</title>
-      <link rel="stylesheet" href="build/css/monkeyInlineStyle.css">
+      <link rel="stylesheet" href="build/css/monkeyInlineStyle.min.css">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+      <link rel="stylesheet" href="css/MonkeyInlineDemo.css">
   </head>
 
   <body>
 
-    <h1>Non Editable Text</h1>
-    <div class="monkey-inline">
-      <h1>Editable Text</h1>
-      <p>Hello, some basic text here</p>
+    <header>
+      <div class="container">
+        <img src="https://camo.githubusercontent.com/49c0a93d55814f4a802c629ca6f93f83899c9773/687474703a2f2f636c796465736d6574732e636f6d2f496d616765732f4d6f6e6b6579496e6c696e652e706e67" width="100%"/>
+      </div>
+    </header>
+
+    <div class="container">
+      <h1>Monkey In Line</h1>
+      <hr>
+      <h3>A simple inline editor designed to be flexible for use in your own projects!</h3>
+      <h4>Written in native Javascript - requires no libraries!</h4>
+      <div class="text-center">
+        <a href="https://raw.githubusercontent.com/csmets/Monkey-Inline/master/build/monkeyInline.min.js" target="_blank">Download monkeyInline.min.js</a>
+        <a href="https://github.com/csmets/Monkey-Inline" >View Github</a>
+      </div>
+
+      <h1>Demo</h1>
+      <hr>
+      <div class="monkey-inline">
+        <h2>Monkey</h2>
+        <h4>From Wikipedia, the free encyclopedia</h4>
+      </div>
+        <div class="row">
+          <div class="col-md-9">
+            <div class="monkey-inline">
+              <p>Monkeys are haplorhine ("dry-nosed") primates, a paraphyletic group
+                generally possessing tails and consisting of approximately 260 known
+                living species. Many monkey species are tree-dwelling (arboreal),
+                although there are species that live primarily on the ground, such as
+                baboons. Most species are also active during the day (diurnal).
+                Monkeys are generally considered to be intelligent, particularly
+                Old World monkeys.
+              </p>
+
+              <p>Lemurs, lorises, and galagos are not monkeys; instead they are
+                strepsirrhine ("wet-nosed") primates. Like monkeys, tarsiers are
+                haplorhine primates; however, they are also not monkeys. There are
+                two major types of monkey: New World monkeys (platyrrhines) from South
+                and Central America and Old World monkeys (catarrhines of the
+                superfamily Cercopithecoidea) from Africa and Asia. Hominoid apes
+                (gibbons, orangutans, gorillas, chimpanzees, and humans), which all
+                lack tails, are also catarrhines but are not considered monkeys.[3]
+                (Tailless monkeys may be called "apes", incorrectly according to
+                modern usage; thus the tailless Barbary macaque is sometimes called
+                the "Barbary ape".) Because Old World monkeys are more closely related
+                to hominoid apes than to New World monkeys, yet the term "monkey"
+                excludes these closer relatives, monkeys are referred to as a
+                paraphyletic group. Simians ("monkeys") and tarsiers emerged within
+                haplorrhines some 60 million years ago. New World monkeys and
+                catarrhine monkeys emerged within the simians some 35 millions years
+                ago. Old World monkeys and Hominoidea emerged within the catarrhine
+                monkeys some 25 millions years ago. Extinct basal simians such as
+                Aegyptopithecus or Parapithecus [35-32 million years ago] are also
+                considered monkeys by primatologists.
+              </p>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <figure>
+              <div class="monkey-inline">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/9e/Monkey_Sam_Before_The_Flight_On_Little_Joe_2.jpg" alt="Monkey" width="100%">
+              </div>
+              <figcaption><div class="monkey-inline">Sam, a rhesus macaque, was flown to a height of 55 miles (89 km) by NASA in 1959</div></figcaption>
+            </figure>
+          </div>
+        </div>
+        <hr>
+
+        <h1>How to use</h1>
+        <p>Grab the files from the <code>build</code> folder and insert it into your project. Include the stylesheet into your header.</p>
+        <pre>&lt;link rel="stylesheet" href="css/monkeyInlineStyle.min.css"&gt;
+&ltlink rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"&gt;</pre>
+        <br>
+        <p>Also include the js file, but like your mother tells you place it at the bottom of your <code>&lt;body&gt;</code> tag.</p>
+        <pre>&lt;script src="build/monkeyInline.min.js"&gt;&lt;/script&gt;</pre>
+        <br>
+        <p>Lastly, add in the following script to your page.</p>
+        <pre>
+&lt;script&gt;
+    var Monkey = new MonkeyInline();
+    Monkey.run();
+&lt;/script&gt;</pre>
+        <br>
+        <p>Now, onto making editable regions! Set your desired tag with the class
+          monkey-inline and your done. However, not all tags are compatible with
+          editable content silly. So make sure you choose a good one, like good
+          old trusty <code>&lt;div&gt;&lt;/div&gt;</code>.</p>
+        <pre>&lt;script src="build/monkeyInline.min.js"&gt;&lt;/script&gt;</pre>
+        <br>
+        <p>Example usage:</p>
+        <pre>
+&lt;div class="monkey-inline"&gt;
+  &lt;h1&gt;Editable Text&lt;/h1&gt;
+  &lt;p&gt;Hello, some basic text here&lt;/p&gt;
+&lt;/div&gt;</pre>
+        <br>
+
+        <hr>
+
+        <h1>Creating your own tool</h1>
+        <p>Firstly, fork the github project or download it. Make sure you have
+          <a href="http://gruntjs.com/" target="_blank">grunt</a> installed and
+          working (If you haven't used Grunt before, be sure to check out the
+          <a href="http://gruntjs.com/getting-started" target="_blank">Getting Started</a> guide).
+          Now you're ready to begin!</p>
+
+        <p>Open up the <code>js</code> folder. This is where the magic happens!</p>
+
+        <h2>Initialize your new tool</h2>
+        <hr>
+        <p>Locate and open up <code>tools.js</code>. To init your new tool the code setup is shown below:</p>
+        <h3>Tool without dialog box</h3>
+        <pre>{
+  "name" : "New-Tool",
+  "function_name" : NewTool,
+  "content" : "Icon",
+  "description" : "New Tool description."
+},</pre>
+
+        <h3>Tool with dialog box</h3>
+
+<pre>{
+  "name" : "New-Tool",
+  "function_name" : NewTool,
+  "content" : "Icon",
+  "description" : "New Tool description.",
+  "dialog_box" : {
+    "function_name" : NewToolDialogBox,
+    "title" : "New Tool",
+    "message" : "Dialog box text",
+    "width" : "250px",
+    "height" : "200px"
+  }
+},</pre>
+
+        <code>name</code> - Element identifier.<br>
+        <code>function_name</code> - Function name to execute on load.<br>
+        <code>content</code> - Icon or text to display on the button.<br>
+        <code>description</code> - Tool tip text on roll over.<br>
+        <code>dialog_box</code> - Monkey Inline recognises that tool wants to have a dialog box.<br>
+        <code>title</code> - Dialog box title.<br>
+        <code>message</code> - Text content to display in dialog box.<br>
+        <code>width</code> - Dialog box width<br>
+        <code>height</code> - Dialog box height<br>
+
+        <br>
+
+        <h2>Add functionality to your tool</h2>
+        <hr>
+        <p>Open up the <code>tools</code> folder and create a new <code>.js</code> file.
+          You can name the file whatever you like, but best practice to keep it the same
+          as your tool.</p>
+
+        <p>Create a new function using the same name as used in the init. <code>"function_name" : NewTool,</code></p>
+
+        <pre>function NewTool(){
+  var ele = document.getElementById("New-Tool");
+  ele.onclick = function(){
+    //Insert your action here.
+  };
+}</pre>
+        <p>Above is all you need to get started on a new tool without a dialog box.</p>
+
+        <h3>Tool with dialog box</h3>
+
+        <pre>function NewTool(){
+  var ele = document.getElementById("New-Tool");
+  ele.onclick = function(){
+    openDialogBox(ele);
+  };
+
+  dialogButtonSubmit(ele, function(){
+    //Grab your values to then insert it into your editable region.
+    var html = document.getElementById("new-tool-input").value;
+    insertHTMLToEditor(html);
+  });
+
+  dialogButtonClose(ele, function(){
+    //Do a close event.
+  });
+}
+
+function NewToolDialogBox(){
+  var ele = document.getElementById("New-Tool");
+  dialogContent(ele, function(){
+
+    //Build your content here. Must return a node type!
+
+    var content = document.createElement("div");
+    var text = document.createElement("input");
+    text.type = "text";
+    text.id = "new-tool-input";
+    content.appendChild(text);
+    return content;
+  });
+}</pre>
+
+        <hr>
+        <h1>Contributing</h1>
+        <p>Monkey Inline is open source. Feel free to fork and contribute.</p>
+        <p>If an issue is found, don't be shy. Let's try to fix it!</p>
+
+        <hr>
+        <h1>License</h1>
+        <p>Author: Clyde Smets<br> Website: http://clydesmets.com</p>
+        <p>Monkey Inline is under the GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</p>
+
     </div>
-    <div class="monkey-inline">
-<h1>Editable Text2222</h1>
-<p>Hello, some basic text here2222</p>
-    </div>
+
     <script src="build/monkeyInline.js"></script>
   </body>
 
