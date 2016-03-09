@@ -59,13 +59,21 @@ Locate and open up `tools.js`. To init your new tool the code setup is shown bel
 	  }
 	},
 `name` - Element identifier.
+
 `function_name` - Function name to execute on load.
+
 `content` - Icon or text to display on the button.
+
 `description` - Tool tip text on roll over.
+
 `dialog_box` - Monkey Inline recognises that tool wants to have a dialog box.
+
 `title` - Dialog box title.
+
 `message` - Text content to display in dialog box.
+
 `width` - Dialog box width
+
 `height` - Dialog box height
 
 ##Add functionality to your tool
@@ -117,10 +125,12 @@ Above is all you need to get started on a new tool without a dialog box.
 
 #Contributing
 Monkey Inline is open source. Feel free to fork and contribute.
+
 If an issue is found, don't be shy. Let's try to fix it!
 
 #License
 Author: Clyde Smets
+
 Website: http://clydesmets.com
 
 Monkey Inline is under the GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
