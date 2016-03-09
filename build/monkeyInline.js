@@ -100,6 +100,11 @@ var MonkeyInline = function(){
     };
   }
 
+  function monkeyHideToolbar(){
+    var toolbar = document.getElementById(InlineClassName);
+    toolbar.style.display = "none";
+  }
+
   function monkeyToolbar(element){
     var toolbar = document.getElementById(toolbarID);
     positionToolbar(element,toolbar);
@@ -107,15 +112,30 @@ var MonkeyInline = function(){
   }
 
   function positionToolbar(element, toolbar){
-    var elementTop = element.offsetTop;
-    var currentPosition = elementTop - document.documentElement.scrollTop;
+    var elementPosition = element.getBoundingClientRect();
+    var elementTop = elementPosition.top;
     var offsetHeight = toolbar.offsetHeight;
-    var toolbarPosition = elementTop - offsetHeight;
-    if (currentPosition >= 100){
-      toolbar.style.top = toolbarPosition+"px";
+    var toolbarYPositionToView = elementTop - offsetHeight;
+    var toolbarYPositionToDoc = document.body.scrollTop + toolbarYPositionToView;
+
+    var elementLeft = elementPosition.left;
+    var elementWidth = toolbar.style.left;
+    var elementLeftDiference = elementLeft - elementWidth;
+    var toolbarXPosition = elementLeft;
+    if (elementLeftDiference > 0){
+      toolbarXPosition  = elementLeft - elementLeftDiference;
+    }
+
+    if (elementTop > 0){
+      toolbar.style.top = toolbarYPositionToDoc+"px";
+      toolbar.style.left = toolbarXPosition+"px";
       toolbar.style.display = "block";
-    }else if (currentPosition < 100){
-      toolbar.style.top = toolbarPosition+"px";
+    }else if (elementTop < 0){
+      var elementBottom = elementPosition.bottom;
+      toolbarYPositionToView = elementBottom;
+      toolbarYPositionToDoc = document.body.scrollTop + toolbarYPositionToView;
+      toolbar.style.top = toolbarYPositionToDoc+"px";
+      toolbar.style.left = toolbarXPosition+"px";
       toolbar.style.display = "block";
     }
   }
@@ -176,6 +196,19 @@ var tools = [
       "message" : "Insert the link below to insert it",
       "width" : "250px",
       "height" : "200px"
+    }
+  },
+  {
+    "name" : "monkeyInline-image",
+    "function_name" : insertImage,
+    "content" : "<i class='fa fa-image'></i>",
+    "description" : "Insert Image",
+    "dialog_box" : {
+      "function_name" : dialogImageContent,
+      "title" : "Insert Image",
+      "message" : "Insert an image link below to add it into the body.",
+      "width" : "300px",
+      "height" : "360px"
     }
   },
   {
@@ -422,6 +455,72 @@ function heading3(){
   ele.onclick = function(){
     document.execCommand('formatBlock',false,'<h3>');
   };
+}
+
+function insertImage(){
+  var ele = document.getElementById("monkeyInline-image");
+
+  ele.onclick = function(){
+    openDialogBox(ele);
+  };
+
+  dialogButtonSubmit(ele, function(){
+    var image = document.getElementById("monkey-inline-image-src").value;
+    var alt = document.getElementById("monkey-inline-image-alt").value;
+    var width = document.getElementById("monkeyInline-image-width").value;
+    var height = document.getElementById("monkeyInline-image-height").value;
+    var imageHTML = "<img src='"+image+"' alt='"+alt+"' width='"+width+"' height='"+height+"'/>";
+    insertHTMLToEditor(imageHTML);
+  });
+
+  dialogButtonClose(ele);
+}
+
+function dialogImageContent(){
+  var ele = document.getElementById("monkeyInline-image");
+  dialogContent(ele, function(){
+    var content = document.createElement("div");
+
+    var imageSrcLabel = document.createElement("label");
+    var imageSrcLabelText = document.createTextNode("Image Link");
+    imageSrcLabel.appendChild(imageSrcLabelText);
+    var imageSrc = document.createElement("input");
+    imageSrc.type = "text";
+    imageSrc.id = "monkey-inline-image-src";
+
+    var imageAltLabel = document.createElement("label");
+    var imageAltLabelText = document.createTextNode("Alt");
+    imageAltLabel.appendChild(imageAltLabelText);
+    var altInput = document.createElement("input");
+    altInput.type = "text";
+    altInput.id = "monkey-inline-image-alt";
+
+    var widthLabel = document.createElement('label');
+    var widthLabelText = document.createTextNode("Width");
+    widthLabel.appendChild(widthLabelText);
+    var width = document.createElement("input");
+    width.type = "text";
+    width.id = "monkeyInline-image-width";
+
+    var heightLabel = document.createElement('label');
+    var heightLabelText = document.createTextNode("Height");
+    heightLabel.appendChild(heightLabelText);
+    var height = document.createElement("input");
+    height.type = "text";
+    height.id = "monkeyInline-image-height";
+
+    content.appendChild(imageSrcLabel);
+    content.appendChild(imageSrc);
+    content.appendChild(imageAltLabel);
+    content.appendChild(altInput);
+    content.appendChild(widthLabel);
+    content.appendChild(width);
+    content.appendChild(heightLabel);
+    content.appendChild(height);
+
+    return content;
+
+  });
 }
 
 function italic(){

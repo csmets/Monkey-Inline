@@ -100,6 +100,11 @@ var MonkeyInline = function(){
     };
   }
 
+  function monkeyHideToolbar(){
+    var toolbar = document.getElementById(InlineClassName);
+    toolbar.style.display = "none";
+  }
+
   function monkeyToolbar(element){
     var toolbar = document.getElementById(toolbarID);
     positionToolbar(element,toolbar);
@@ -107,15 +112,30 @@ var MonkeyInline = function(){
   }
 
   function positionToolbar(element, toolbar){
-    var elementTop = element.offsetTop;
-    var currentPosition = elementTop - document.documentElement.scrollTop;
+    var elementPosition = element.getBoundingClientRect();
+    var elementTop = elementPosition.top;
     var offsetHeight = toolbar.offsetHeight;
-    var toolbarPosition = elementTop - offsetHeight;
-    if (currentPosition >= 100){
-      toolbar.style.top = toolbarPosition+"px";
+    var toolbarYPositionToView = elementTop - offsetHeight;
+    var toolbarYPositionToDoc = document.body.scrollTop + toolbarYPositionToView;
+
+    var elementLeft = elementPosition.left;
+    var elementWidth = toolbar.style.left;
+    var elementLeftDiference = elementLeft - elementWidth;
+    var toolbarXPosition = elementLeft;
+    if (elementLeftDiference > 0){
+      toolbarXPosition  = elementLeft - elementLeftDiference;
+    }
+
+    if (elementTop > 0){
+      toolbar.style.top = toolbarYPositionToDoc+"px";
+      toolbar.style.left = toolbarXPosition+"px";
       toolbar.style.display = "block";
-    }else if (currentPosition < 100){
-      toolbar.style.top = toolbarPosition+"px";
+    }else if (elementTop < 0){
+      var elementBottom = elementPosition.bottom;
+      toolbarYPositionToView = elementBottom;
+      toolbarYPositionToDoc = document.body.scrollTop + toolbarYPositionToView;
+      toolbar.style.top = toolbarYPositionToDoc+"px";
+      toolbar.style.left = toolbarXPosition+"px";
       toolbar.style.display = "block";
     }
   }
