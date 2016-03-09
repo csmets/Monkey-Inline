@@ -49,6 +49,19 @@ var tools = [
     }
   },
   {
+    "name" : "monkeyInline-image",
+    "function_name" : insertImage,
+    "content" : "<i class='fa fa-image'></i>",
+    "description" : "Insert Image",
+    "dialog_box" : {
+      "function_name" : dialogImageContent,
+      "title" : "Insert Image",
+      "message" : "Insert an image link below to add it into the body.",
+      "width" : "300px",
+      "height" : "360px"
+    }
+  },
+  {
     "name" : "monkeyInline-clearFormatting",
     "function_name" : clearFormatting,
     "content" : "<i class='fa fa-eraser'></i>",
