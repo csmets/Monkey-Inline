@@ -118,7 +118,6 @@ var MonkeyInline = function(){
     var toolbarYPositionToView = elementTop - offsetHeight;
     var scrollPosition = document.documentElement.scrollTop || document.body.scrollTop;
     var toolbarYPositionToDoc = scrollPosition + toolbarYPositionToView;
-    console.log(document.body.scrollTop);
     var elementLeft = elementPosition.left;
     var elementWidth = toolbar.style.left;
     var elementLeftDiference = elementLeft - elementWidth;
