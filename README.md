@@ -2,6 +2,8 @@
 #**Monkey in line.**
 ###A simple inline editor designed to be flexible for use in your own projects!
 
+<img src="http://clydesmets.com/Images/MonkeyInlineDemo.gif" alt="Monkey Inline Demo Gif" width="100%" />
+
 ##How to use
 Grab the files from the `build` folder and insert it into your project.
 Include the stylesheet into your header.
