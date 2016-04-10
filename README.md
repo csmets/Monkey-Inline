@@ -4,6 +4,8 @@
 
 <img src="http://clydesmets.com/Images/MonkeyInlineDemo.gif" alt="Monkey Inline Demo Gif" width="100%" />
 
+##Try it out yourself [here](http://csmets.github.io/Monkey-Inline/)
+
 ##How to use
 Grab the files from the `build` folder and insert it into your project.
 Include the stylesheet into your header.
