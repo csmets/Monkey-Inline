@@ -12,6 +12,10 @@ Include the stylesheet into your header.
 
     <link rel="stylesheet" href="build/css/monkeyInlineStyle.css">
 
+Optional: Include the font awesome library for the editor icons, you don't have to include this if you want to display your own icons instead.
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
 Also include the js file, but like your mother tells you place it at the bottom of your `<body>` tag.
 
     <script src="build/monkeyInline.min.js"></script>
