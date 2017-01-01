@@ -1,4 +1,3 @@
-![MonkeyInline](http://clydesmets.com/Images/MonkeyInline.png)
 #**Monkey in line.**
 ###A simple inline editor designed to be flexible for use in your own projects!
 
